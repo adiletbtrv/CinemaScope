@@ -1,104 +1,221 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CinemaScope</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.freepik.com/512/2798/2798007.png">
   <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111'/%3E%3Ccircle cx='16' cy='16' r='9' stroke='%23FFD60A' stroke-width='1.6' fill='none'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%23FFD60A'/%3E%3Cline x1='7' y1='12' x2='25' y2='12' stroke='%23FFD60A' stroke-width='1.2' stroke-linecap='round'/%3E%3Cline x1='7' y1='20' x2='25' y2='20' stroke='%23FFD60A' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E" />
 </head>
-<body>
-  <header id="topNav" class="nav">
-    <div class="nav-inner">
-      <div class="left">
-        <div class="logo" id="logo">AB</div>
-        <nav class="tabs" role="navigation" aria-label="Main">
-          <button class="tab active" data-section="home" title="Home"><i class="fas fa-home"></i></button>
-          <button class="tab" data-section="movies" title="Movies"><i class="fas fa-film"></i></button>
-          <button class="tab" data-section="tv" title="TV Shows"><i class="fas fa-tv"></i></button>
-          <button class="tab" data-section="list" title="My List"><i class="fas fa-heart"></i></button>
-        </nav>
-      </div>
-      <div class="right">
-        <div class="search-wrap">
-          <button class="search-btn" id="searchBtn" title="Search"><i class="fas fa-search"></i></button>
-        </div>
-        <button id="profileBtn" class="profile" aria-label="Profile">
-          <i class="fas fa-user-circle"></i>
-        </button>
-      </div>
-    </div>
-  </header>
 
-  <main id="app">
-    <section id="hero" class="hero">
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <a class="wordmark" id="homeLink" href="#" aria-label="CinemaScope home">
+      <svg class="wm-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="28" height="28" rx="7" fill="#FFD60A" fill-opacity=".12" />
+        <circle cx="14" cy="14" r="8" stroke="#FFD60A" stroke-width="1.4" />
+        <circle cx="14" cy="14" r="3.2" fill="#FFD60A" />
+        <line x1="6" y1="10.5" x2="22" y2="10.5" stroke="#FFD60A" stroke-width="1.2" stroke-linecap="round" />
+        <line x1="6" y1="17.5" x2="22" y2="17.5" stroke="#FFD60A" stroke-width="1.2" stroke-linecap="round" />
+      </svg>
+      <span class="wm-text">CinemaScope</span>
+    </a>
+
+    <nav class="nav-section" aria-label="Main">
+      <p class="nav-section-label">Discover</p>
+      <button class="nav-row active" data-section="home">
+        <span class="nav-row-icon"><i class="fas fa-house-chimney"></i></span>
+        <span class="nav-row-text">Home</span>
+      </button>
+      <button class="nav-row" data-section="movies">
+        <span class="nav-row-icon"><i class="fas fa-clapperboard"></i></span>
+        <span class="nav-row-text">Films</span>
+      </button>
+      <button class="nav-row" data-section="tv">
+        <span class="nav-row-icon"><i class="fas fa-tv"></i></span>
+        <span class="nav-row-text">Series</span>
+      </button>
+    </nav>
+
+    <nav class="nav-section" aria-label="Library">
+      <p class="nav-section-label">Library</p>
+      <button class="nav-row" data-section="list">
+        <span class="nav-row-icon"><i class="fas fa-bookmark"></i></span>
+        <span class="nav-row-text">Saved</span>
+        <span class="nav-chip" id="savedChip" hidden>0</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <button class="nav-row" id="searchBtn">
+        <span class="nav-row-icon"><i class="fas fa-magnifying-glass"></i></span>
+        <span class="nav-row-text">Search</span>
+        <kbd class="nav-shortcut">⌘K</kbd>
+      </button>
+      <button class="nav-row" id="profileBtn">
+        <span class="nav-row-icon"><i class="fas fa-circle-user"></i></span>
+        <span class="nav-row-text">Account</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+
+    <!-- Mobile topbar -->
+    <header class="topbar" id="topbar">
+      <button class="topbar-home" id="topbarHome" aria-label="Home">
+        <svg class="wm-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="28" height="28" rx="7" fill="#FFD60A" fill-opacity=".12" />
+          <circle cx="14" cy="14" r="8" stroke="#FFD60A" stroke-width="1.4" />
+          <circle cx="14" cy="14" r="3.2" fill="#FFD60A" />
+          <line x1="6" y1="10.5" x2="22" y2="10.5" stroke="#FFD60A" stroke-width="1.2" stroke-linecap="round" />
+          <line x1="6" y1="17.5" x2="22" y2="17.5" stroke="#FFD60A" stroke-width="1.2" stroke-linecap="round" />
+        </svg>
+        <span class="wm-text">CinemaScope</span>
+      </button>
+      <div class="topbar-right">
+        <button class="glass-pill" id="searchBtnMob" aria-label="Search"><i
+            class="fas fa-magnifying-glass"></i></button>
+        <button class="glass-pill" id="profileBtnMob" aria-label="Account"><i class="fas fa-circle-user"></i></button>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
       <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-scrim"></div>
+
       <div class="hero-content">
-        <h1 id="heroTitle"></h1>
-        <p id="heroTagline" class="tagline"></p>
-        <div class="hero-actions">
-          <button id="heroPlay" class="btn primary"><i class="fas fa-play"></i><span>Play Trailer</span></button>
-          <button id="heroInfo" class="btn outline"><i class="fas fa-info-circle"></i><span>More Info</span></button>
-          <button id="heroFav" class="btn heart"><i class="far fa-heart"></i><span class="btn-text">Add to List</span></button>
+        <div class="hero-eyebrow">
+          <span class="eyebrow-pulse"></span>
+          <span id="heroEyebrow">Trending Now</span>
         </div>
+        <h1 class="hero-title" id="heroTitle"></h1>
+        <p class="hero-synopsis" id="heroTagline"></p>
+        <div class="hero-attrs" id="heroAttrs"></div>
+        <div class="hero-actions">
+          <button class="btn-primary" id="heroPlay">
+            <i class="fas fa-play"></i>
+            <span>Play Trailer</span>
+          </button>
+          <button class="btn-secondary" id="heroInfo">
+            <i class="fas fa-circle-info"></i>
+            <span>More Info</span>
+          </button>
+          <button class="btn-icon" id="heroFav" aria-label="Save">
+            <i class="far fa-bookmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-score" id="heroScore" hidden>
+        <i class="fas fa-star"></i>
+        <span id="heroScoreVal"></span>
       </div>
     </section>
 
-    <section id="rows" class="rows"></section>
-    <div id="noResults" class="empty" hidden>No results found.</div>
+    <!-- Rows -->
+    <div class="shelf-container" id="rows"></div>
+
+    <!-- Empty -->
+    <div class="empty-view" id="noResults" hidden>
+      <div class="empty-glyph"><i class="fas fa-bookmark"></i></div>
+      <h3>Your list is empty</h3>
+      <p>Bookmark films and series to watch later.</p>
+    </div>
+
   </main>
 
-  <div id="toast" class="toast" aria-hidden="true"></div>
+  <!-- DOCK (mobile only) -->
+  <nav class="dock" id="dock" aria-label="Navigation">
+    <button class="dock-btn active" data-section="home"><i class="fas fa-house-chimney"></i><span>Home</span></button>
+    <button class="dock-btn" data-section="movies"><i class="fas fa-clapperboard"></i><span>Films</span></button>
+    <button class="dock-btn" data-section="tv"><i class="fas fa-tv"></i><span>Series</span></button>
+    <button class="dock-btn" data-section="list"><i class="fas fa-bookmark"></i><span>Saved</span></button>
+    <button class="dock-btn" id="dockSearch"><i class="fas fa-magnifying-glass"></i><span>Search</span></button>
+  </nav>
 
-  <div id="searchModal" class="modal">
-    <div class="modal-content search-modal">
-      <div class="modal-header">
-        <h2>Search Movies & TV Shows</h2>
-        <button class="modal-close" id="searchClose"><i class="fas fa-times"></i></button>
+  <!-- TOAST -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- COMMAND PALETTE -->
+  <div class="veil" id="searchVeil">
+    <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Search">
+      <div class="palette-header">
+        <i class="fas fa-magnifying-glass palette-icon"></i>
+        <input class="palette-input" id="searchInput" type="text" placeholder="Search films, series…" autocomplete="off"
+          spellcheck="false" />
+        <button class="palette-dismiss" id="searchClear" hidden aria-label="Clear"><i class="fas fa-xmark"></i></button>
+        <kbd class="palette-esc" id="searchEsc">esc</kbd>
       </div>
-      <div class="search-input-wrap">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="Search for movies, TV shows..." />
+      <div class="palette-rule"></div>
+      <div class="palette-results" id="searchResults">
+        <p class="palette-empty-hint">Start typing to search…</p>
       </div>
-      <div id="searchResults" class="search-results"></div>
     </div>
   </div>
 
-  <div id="detailModal" class="modal">
-    <div class="modal-content detail-modal">
-      <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+  <!-- DETAIL SHEET -->
+  <div class="veil" id="detailVeil">
+    <div class="sheet" id="detailSheet" role="dialog" aria-modal="true" aria-label="Details">
+      <button class="sheet-close" id="detailClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
       <div id="detailContent"></div>
     </div>
   </div>
 
-  <div id="profileModal" class="modal">
-    <div class="modal-content profile-modal">
-      <div class="modal-header">
-        <h2>Profile Settings</h2>
-        <button class="modal-close" id="profileClose"><i class="fas fa-times"></i></button>
+  <!-- ACCOUNT SHEET -->
+  <div class="veil" id="profileVeil">
+    <div class="sheet sheet-sm" id="profileSheet" role="dialog" aria-modal="true" aria-label="Account">
+      <button class="sheet-close" id="profileClose" aria-label="Close"><i class="fas fa-xmark"></i></button>
+      <div class="account">
+        <div class="account-avatar"><i class="fas fa-user"></i></div>
+        <h2 class="account-name">Cinema User</h2>
+        <p class="account-sub">Personal collection</p>
+        <div class="account-stats">
+          <div class="account-stat">
+            <b id="statFavorites">0</b>
+            <span>Saved</span>
+          </div>
+          <div class="account-divider"></div>
+          <div class="account-stat">
+            <b>∞</b>
+            <span>To Watch</span>
+          </div>
+        </div>
+        <ul class="account-list">
+          <li>
+            <button class="account-list-row danger" id="clearListBtn">
+              <span class="alr-icon"><i class="fas fa-trash-can"></i></span>
+              <span class="alr-label">Clear saved list</span>
+              <i class="fas fa-chevron-right alr-chevron"></i>
+            </button>
+          </li>
+        </ul>
       </div>
-      <div class="profile-content">
-        <div class="profile-avatar">
-          <i class="fas fa-user-circle"></i>
-        </div>
-        <h3>Cinema User</h3>
-        <div class="profile-stats">
-          <div class="stat">
-            <div class="stat-value" id="statFavorites">0</div>
-            <div class="stat-label">Favorites</div>
-          </div>
-          <div class="stat">
-            <div class="stat-value" id="statWatched">0</div>
-            <div class="stat-label">Watched</div>
-          </div>
-        </div>
-        <button class="btn primary" id="clearListBtn">Clear My List</button>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONFIRM DIALOG -->
+  <div class="confirm-veil" id="confirmVeil">
+    <div class="confirm-box" id="confirmBox">
+      <div class="confirm-icon"><i class="fas fa-trash-can"></i></div>
+      <h3 class="confirm-title">Clear Saved List</h3>
+      <p class="confirm-body">This will permanently remove all saved films and series from your library. This action
+        cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn cancel" id="confirmCancel">Cancel</button>
+        <button class="confirm-btn destructive" id="confirmOk">Clear All</button>
       </div>
     </div>
   </div>
